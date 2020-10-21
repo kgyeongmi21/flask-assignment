@@ -13,7 +13,13 @@
         </tr>
         </thead>
         <tbody>
-
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td><a href="{{ url_for('.post_page', postid=post.postid) }}">{{ post.title }}</a></td>
+                <td><a href="{{ url_for('.author_page', userid=post.userid) }}">{{ post.user.name }}</a></td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
     <div style="display: flex; flex-direction: row;">

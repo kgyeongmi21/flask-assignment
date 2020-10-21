@@ -9,7 +9,10 @@ main_blueprint = Blueprint('', __name__)
 
 @main_blueprint.route('/')
 def board_page():
-    return render_template("list.html")
+    posts = Post.query.all()
+    for post in posts:
+        post.user = User.query.filter_by(userid=post.userid).first()
+    return render_template("list.html", posts=posts)
 
 
 @main_blueprint.route('/post/write', methods=['GET', 'POST'])
@@ -42,8 +45,9 @@ def delete_page():
 
 
 @main_blueprint.route('/post/<postid>')
-def post_page():
-    return render_template("post_list.html")
+def post_page(postid):
+    post = Post.query.filter_by(postid=postid)
+    return render_template("post_list.html", post=post)
 
 
 @main_blueprint.route('/user/<userid>')
