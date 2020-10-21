@@ -24,7 +24,6 @@ def writing_page():
             user = User(
                 name=form.author.data
             )
-            print(user)
             db.session.add(user)
             db.session.commit()
 
@@ -46,9 +45,17 @@ def delete_page():
 
 @main_blueprint.route('/post/<postid>')
 def post_page(postid):
-    post = Post.query.filter_by(postid=postid)
-    return render_template("post_list.html", post=post)
-
+    post = Post.query.filter_by(postid=postid).first()
+    post.user = User.query.filter_by(userid=post.userid).first()
+    form = WriteForm()
+    form.title.data = post.title
+    form.title.render_kw ={'readonly': True}
+    form.author.data = post.user.name
+    form.author.render_kw = {'readonly': True}
+    form.content.data = post.body
+    form.content.render_kw = {'readonly': True}
+    form.submit.render_kw = {'style': 'display: none'}
+    return render_template("detail.html", form=form)
 
 @main_blueprint.route('/user/<userid>')
 def author_page():
