@@ -4,6 +4,8 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template
 
+from forms import WriteForm
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
@@ -14,6 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 db.create_all()
 
+
 @app.route('/')
 def board_page():
     return render_template("list.html")
@@ -21,7 +24,8 @@ def board_page():
 
 @app.route('/post/write')
 def writing_page():
-    return render_template("write.html")
+    form = WriteForm()
+    return render_template("write.html", form=form)
 
 
 @app.route('/post/delete')
