@@ -63,8 +63,18 @@ def post_page(postid):
 
 
 @main_blueprint.route('/user/<userid>')
-def author_page():
-    return render_template("author_list.html")
+def author_page(userid):
+    posts = Post.query.filter_by(userid=userid).all()
+    user = User.query.filter_by(userid=userid).first()
+    return render_template("author_list.html", posts=posts, user=user)
+
+
+@main_blueprint.route('/user/delete', methods=['POST'])
+def author_delete():
+    posts = Post.query.filter_by(userid=request.form['userid']).delete()
+    user = User.query.filter_by(userid=request.form['userid']).delete()
+    db.session.commit()
+    return redirect(url_for('.board_page'))
 
 
 @main_blueprint.errorhandler(404)
