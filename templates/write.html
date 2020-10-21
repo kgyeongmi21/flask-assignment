@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <form action="/post/delete" method="http" style="display: flex; flex-direction: column">
+        <div class="wrapper">
+            <label style="width: 100px"><h3>제목</h3></label>
+            <input name="title" type="text" style="width: 200px">
+        </div>
+        <div class="wrapper">
+            <label style="width: 100px"><h3>작성자</h3></label>
+            <input name="writer" type="text" style="width: 200px">
+        </div>
+        <h3>내용</h3>
+        <textarea name="content" rows="20"></textarea>
+        <div class="wrapper" style="display: flex; flex-direction: row; justify-content: space-between">
+            <button class="form-control" type="submit" >게시</button>
+            <button class="form-control" type="button" onclick="window.location.href = '/'">취소</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

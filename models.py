@@ -7,8 +7,8 @@ class User(db.Model):
     name = db.Column(db.String(64))
 
 
-class Article(db.Model):
-    __table__ = 'articles'
+class Post(db.Model):
+    __table__ = 'posts'
     postid = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
     body = db.Column(db.String(4096))
