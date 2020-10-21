@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Board</h1>
+    </div>
+    <table class="table" style="border: 1px solid black">
+        <thead>
+        <tr>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <div class="row" style="display: flex; flex-direction: row;">
+        <button type="button" class="btn btn-light" style="margin-right: 30px">작성</button>
+        <input type="text" class="form-control" style="width: 200px; margin-right: 30px">
+        <button type="button" class="btn btn-light">삭제</button>
+    </div>
+</div>
+{% endblock %}
