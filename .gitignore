@@ -1,0 +1,4 @@
+venv/**
+problem/**
+.idea/**
+**/.DS_Store
