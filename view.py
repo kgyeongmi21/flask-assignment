@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, Blueprint
+from flask import render_template, redirect, url_for, Blueprint, request, session
 
 from app import db
 from forms import WriteForm
@@ -9,7 +9,7 @@ main_blueprint = Blueprint('', __name__)
 
 @main_blueprint.route('/')
 def board_page():
-    posts = Post.query.all()
+    posts = Post.query.filter_by(userid=session['userid']).all()
     for post in posts:
         post.user = User.query.filter_by(userid=post.userid).first()
     return render_template("list.html", posts=posts)
@@ -34,13 +34,17 @@ def writing_page():
         )
         db.session.add(post)
         db.session.commit()
+        session['username'] = user.name
+        session['userid'] = user.userid
         return redirect(url_for('.board_page'))
     return render_template("write.html", form=form)
 
 
-@main_blueprint.route('/post/delete')
+@main_blueprint.route('/post/delete', methods=['POST'])
 def delete_page():
-    return render_template("post_delete.html")
+    Post.query.filter_by(title=request.form['title']).delete()
+    db.session.commit()
+    return redirect(url_for('.board_page'))
 
 
 @main_blueprint.route('/post/<postid>')
@@ -49,13 +53,14 @@ def post_page(postid):
     post.user = User.query.filter_by(userid=post.userid).first()
     form = WriteForm()
     form.title.data = post.title
-    form.title.render_kw ={'readonly': True}
+    form.title.render_kw = {'readonly': True}
     form.author.data = post.user.name
     form.author.render_kw = {'readonly': True}
     form.content.data = post.body
     form.content.render_kw = {'readonly': True}
     form.submit.render_kw = {'style': 'display: none'}
     return render_template("detail.html", form=form)
+
 
 @main_blueprint.route('/user/<userid>')
 def author_page():

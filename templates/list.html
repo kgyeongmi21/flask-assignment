@@ -25,8 +25,8 @@
         <button type="button" class="btn btn-light" style="margin-right: 30px"
                 onclick="window.location.href = '/post/write'">작성
         </button>
-        <form action="/post/delete" method="http" style="display: flex; width: 100%">
-            <input type="text" class="form-control" style="width: 200px; margin-right: 30px">
+        <form action="/post/delete" method="post" style="display: flex; width: 100%">
+            <input type="text" class="form-control" style="width: 200px; margin-right: 30px" name="title">
             <button type="submit" class="btn btn-light">삭제</button>
         </form>
     </div>
