@@ -9,7 +9,7 @@ main_blueprint = Blueprint('', __name__)
 
 @main_blueprint.route('/')
 def board_page():
-    posts = Post.query.filter_by(userid=session['userid']).all()
+    posts = Post.query.filter_by(userid=session.get('userid')).all()
     for post in posts:
         post.user = User.query.filter_by(userid=post.userid).first()
     return render_template("list.html", posts=posts)
